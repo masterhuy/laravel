@@ -24,6 +24,7 @@ class UserController extends Controller
                 'users_status.name as status'
                 )
             ->get();
+            // ->paginate();
 
         return response()->json($users);
     }
