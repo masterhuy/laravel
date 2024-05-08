@@ -49,4 +49,10 @@ class UserController extends Controller
             "departments" => $departments,
         ]);
     }
+
+    public function store(Request $request)
+    {
+        // Validate and store the blog post...
+        return $request;
+    }
 }
