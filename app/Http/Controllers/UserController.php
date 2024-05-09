@@ -77,5 +77,17 @@ class UserController extends Controller
             'password.required' => 'Nhap mat khau',
             'password.confirmed' => 'Mat khau xac nhan khong khop',
         ]);
+
+
+        //Eloquent orm
+        User::create([
+            "status_id" => $request["status_id"],
+            "username" => $request["username"],
+            "name" => $request["name"],
+            "email" => $request["email"],
+            "department_id" => $request["department_id"],
+            "password" => \Hash::make($request["password"])
+        ]);
+
     }
 }
