@@ -52,7 +52,30 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        // Validate and store the blog post...
-        return $request;
+        $validated = $request->validate([
+            // 'title' => 'required|unique:posts|max:255',
+            // 'body' => 'required',
+            'status_id' => 'required',
+            'username' => 'required|unique:users,username',
+            'name' => 'required',
+            'email' => 'required|email',
+            'department_id' => 'required',
+            'password' => 'required|confirmed'
+        ],[
+            'status_id.required' => 'Nhap tinh trang',
+
+            'username.required' => 'Nhap ten tai khoan',
+            'username.unique' => 'Ten tai khoan da ton tai',
+
+            'name.required' => 'Nhap ten',
+
+            'email.required' => 'Nhap email',
+            'email.email' => 'Email khong hop le',
+
+            'department_id.required' => 'Nhap phong ban',
+
+            'password.required' => 'Nhap mat khau',
+            'password.confirmed' => 'Mat khau xac nhan khong khop',
+        ]);
     }
 }
