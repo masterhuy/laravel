@@ -52,31 +52,31 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        // $validated = $request->validate([
-        //     // 'title' => 'required|unique:posts|max:255',
-        //     // 'body' => 'required',
-        //     'status_id' => 'required',
-        //     'username' => 'required|unique:users,username',
-        //     'name' => 'required',
-        //     'email' => 'required|email',
-        //     'department_id' => 'required',
-        //     'password' => 'required|confirmed'
-        // ],[
-        //     'status_id.required' => 'Nhap tinh trang',
+        $validated = $request->validate([
+            // 'title' => 'required|unique:posts|max:255',
+            // 'body' => 'required',
+            'status_id' => 'required',
+            'username' => 'required|unique:users,username',
+            'name' => 'required',
+            'email' => 'required|email',
+            'department_id' => 'required',
+            'password' => 'required|confirmed'
+        ],[
+            'status_id.required' => 'Nhap tinh trang',
 
-        //     'username.required' => 'Nhap ten tai khoan',
-        //     'username.unique' => 'Ten tai khoan da ton tai',
+            'username.required' => 'Nhap ten tai khoan',
+            'username.unique' => 'Ten tai khoan da ton tai',
 
-        //     'name.required' => 'Nhap ten',
+            'name.required' => 'Nhap ten',
 
-        //     'email.required' => 'Nhap email',
-        //     'email.email' => 'Email khong hop le',
+            'email.required' => 'Nhap email',
+            'email.email' => 'Email khong hop le',
 
-        //     'department_id.required' => 'Nhap phong ban',
+            'department_id.required' => 'Nhap phong ban',
 
-        //     'password.required' => 'Nhap mat khau',
-        //     'password.confirmed' => 'Mat khau xac nhan khong khop',
-        // ]);
+            'password.required' => 'Nhap mat khau',
+            'password.confirmed' => 'Mat khau xac nhan khong khop',
+        ]);
 
         $user = $request->except(["password", "password_confirmation"]);
         $user["password"] = \Hash::make($request["password"]);
@@ -118,5 +118,38 @@ class UserController extends Controller
             "departments" => $departments,
         ]);
 
+    }
+
+    public function update(Request $request, $id){
+        $validated = $request->validate([
+            // 'title' => 'required|unique:posts|max:255',
+            // 'body' => 'required',
+            'status_id' => 'required',
+            'username' => 'required|unique:users,username,'.$id,
+            'name' => 'required',
+            'email' => 'required|email',
+            'department_id' => 'required',
+        ],[
+            'status_id.required' => 'Nhap tinh trang',
+
+            'username.required' => 'Nhap ten tai khoan',
+            'username.unique' => 'Ten tai khoan da ton tai',
+
+            'name.required' => 'Nhap ten',
+
+            'email.required' => 'Nhap email',
+            'email.email' => 'Email khong hop le',
+
+            'department_id.required' => 'Nhap phong ban',
+        ]);
+
+        if($request["change_password"] == true){
+            $validated = $request->validate([
+                'password' => 'required|confirmed'
+            ],[
+                'password.required' => 'Nhap mat khau',
+                'password.confirmed' => 'Mat khau xac nhan khong khop'
+            ]);
+        }
     }
 }
