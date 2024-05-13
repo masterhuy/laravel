@@ -143,12 +143,25 @@ class UserController extends Controller
             'department_id.required' => 'Nhap phong ban',
         ]);
 
+        User::find($id)->update([
+            'status_id' => $request['status_id'],
+            'username' => $request['username'],
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'department_id' => $request['department_id'],
+        ]);
+
         if($request["change_password"] == true){
             $validated = $request->validate([
                 'password' => 'required|confirmed'
             ],[
                 'password.required' => 'Nhap mat khau',
                 'password.confirmed' => 'Mat khau xac nhan khong khop'
+            ]);
+
+            User::find($id)->update([
+                'password' => \Hash::make($request['password']),
+                'change_password_at' => NOW()
             ]);
         }
     }
