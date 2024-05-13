@@ -15,7 +15,7 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = DB::table('users')
+        $users = User::where('users.id', '!=', '1')
             ->join('departments', 'users.department_id', '=', 'departments.id')
             ->join('users_status', 'users.status_id', '=', 'users_status.id')
             ->select(
@@ -164,5 +164,9 @@ class UserController extends Controller
                 'change_password_at' => NOW()
             ]);
         }
+    }
+
+    public function destroy($id){
+        User::find($id)->delete();
     }
 }
